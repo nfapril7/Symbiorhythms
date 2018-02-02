@@ -30,15 +30,26 @@ public class Pekerja {
     protected Date Shift[];
     Validation validation;
     SimpleDateFormat dateFormat;
-    protected double fisik[];
-    protected double emosional[];
-    protected double intelektual[];
-    protected double total[];
 
     public Pekerja() {
         biorhythms = new Biorhythms();
         validation = new Validation();
         dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+    }
+
+    public Pekerja(int jmlShift, Date Tgllahir, Date Tglshift, Date[] Shift, Validation validation, SimpleDateFormat dateFormat) {
+        this.biorhythms = biorhythms;
+        this.jmlShift = jmlShift;
+        this.Tgllahir = Tgllahir;
+        this.Tglshift = Tglshift;
+        this.Shift = Shift;
+        this.validation = validation;
+        this.dateFormat = dateFormat;
+    }
+    
+
+    public Biorhythms getBiorhythms() {
+        return biorhythms;
     }
 
     /**
@@ -111,38 +122,10 @@ public class Pekerja {
     public Date getTglshift() {
         return Tglshift;
     }
-
-    public double[] getEmosional() {
-        emosional = biorhythms.emosional;
-        return biorhythms.emosional; //To change body of generated methods, choose Tools | Templates.
-    }
-//
-
-    public double[] getFisik() {
-        fisik = biorhythms.fisik;
-        return biorhythms.fisik; //To change body of generated methods, choose Tools | Templates.
-    }
-//
-
-    public double[] getIntelektual() {
-        intelektual = biorhythms.intelektual;
-        return biorhythms.intelektual; //To change body of generated methods, choose Tools | Templates.
-    }
-//
-
-    public double[] getTotal() {
-        total = biorhythms.total;
-        return biorhythms.total; //To change body of generated methods, choose Tools | Templates.
-    }
-
     /**
      * Method HandlingBatasan berfungsi untuk menhandling jika inputan user pada
      * jumlah shift melebihi/kurang dari persyaratan (jumlah hari shift harus 5
      * sampai 10 hari);
-     *
-     * @param tglAwal : membutuhkan inputan parameter tgl shift
-     * @param blnAwal : membutuhkan inputan parameter bulan shift
-     * @param thnAwal : membutuhkan inputan parameter tahun shift
      */
     int MakeJmlShift(int jmlShift) {
         if (validation.validasiShift(jmlShift)) {
@@ -236,17 +219,13 @@ public class Pekerja {
     public void Hitung(Date shift[]) {
         if (validation.isValidate) {
             int hari[] = new int[getJmlShift()];
-            fisik = new double[getJmlShift()];
-            emosional = new double[getJmlShift()];
-            intelektual = new double[getJmlShift()];
-            total = new double[getJmlShift()];
             for (int i = 0; i < hari.length; i++) {
                 hari[i] = (int) TimeUnit.MILLISECONDS.toDays((shift[i].getTime() - getTgllahir().getTime()));
                 biorhythms.getFisik(hari, getJmlShift());
                 biorhythms.getEmosional(hari, getJmlShift());
                 biorhythms.getIntelektual(hari, getJmlShift());
                 biorhythms.getTotal(getJmlShift());
-            }
+            }            
         }
     }
 

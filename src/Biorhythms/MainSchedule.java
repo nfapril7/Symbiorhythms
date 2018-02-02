@@ -15,50 +15,29 @@ public class MainSchedule {
         // - handling jika inputan jmlshift, tgl, bln, thn bukan integer
         System.out.println("PEKERJA 1");
         Pekerja pekerja = new Pekerja();
-        pekerja.MakeJmlShift(5);
-        pekerja.makeAppendShift(4, 4, 2018);
-        pekerja.makeCalShift();
-        pekerja.makeAppendforBirth(4, 4, 1995);
-        pekerja.Hitung(pekerja.getShift()); 
-        pekerja.getFisik();
-        pekerja.getEmosional();
-        pekerja.getIntelektual();
-        pekerja.getTotal();
+        callFunction(pekerja, 5, 4, 4, 2018, 1, 1, 1995);
 
         Pekerja pekerja2 = new Pekerja();
-        pekerja2.setJmlShift(pekerja.getJmlShift());
-        pekerja2.setTglshift(pekerja.getTglshift());
-        pekerja2.makeAppendforBirth(4, 4, 1995);
-        pekerja2.Hitung(pekerja.getShift());
-        pekerja2.getFisik();
-        pekerja2.getEmosional();
-        pekerja2.getIntelektual();
-        pekerja2.getTotal();
+        callFuction(pekerja2, pekerja, 4, 4, 1995);
+
         CompareBiorhythms compareBio = new CompareBiorhythms();
-        System.out.println(pekerja.total[0]);
-        compareBio.perbandingan(pekerja.total, pekerja2.total, pekerja.getJmlShift(), pekerja);
+        compareBio.perbandingan(pekerja.getBiorhythms().total, pekerja2.getBiorhythms().total, pekerja.getJmlShift(), pekerja);
         compareBio.table(pekerja, pekerja2);
-        ////        do {
-        //            //misalnya
-        //            tanggal.MakeShift(29, 2, 2018, 6);
-        ////        } while (tanggal.isValidate == false);
-        //        do {
-        //            tanggal.validate(28,2,1995);
-        //        } while (tanggal.isValidate == false);
-        //        Biorhythms s1 = new Biorhythms(tanggal.getJmlShift());
-        //        tanggal.Hitung(tanggal.getShift(), s1);
-        //        Pekerja p1 = new Pekerja(tanggal.getJmlShift());
-        //
-        //        System.out.println("PEKERJA 2");
-        //        ValiDate tanggal2 = new ValiDate();
-        //        tanggal2.setJmlShift(tanggal.getJmlShift());
-        //        tanggal2.setTglshift(tanggal.getTglshift());
-        //        do {
-        //            tanggal2.validate(1,1,1996);
-        //        } while (tanggal2.isValidate == false);
-        //        Biorhythms s2 = new Biorhythms(tanggal2.getJmlShift());
-        //        tanggal2.Hitung(tanggal2.getShift(), s2);
-        //        Pekerja p2 = new Pekerja(tanggal.getJmlShift());
-        //        p2.perbandingan(s1.total, s2.total, tanggal.getJmlShift(), tanggal,null );
+    }
+
+    static void callFunction(Pekerja pekerja, int jmlShift, int tglShift, int blnShift, int thnShift, int tglLahir,
+            int blnLahir, int thnLahir) {
+        pekerja.MakeJmlShift(jmlShift);
+        pekerja.makeAppendShift(tglShift, blnShift, thnShift);
+        pekerja.makeCalShift();
+        pekerja.makeAppendforBirth(tglLahir, blnLahir, thnLahir);
+        pekerja.Hitung(pekerja.getShift());
+    }
+
+    static void callFuction(Pekerja pekerja, Pekerja pekerja1, int tglLahir, int blnLahir, int thnLahir) {
+        pekerja.setJmlShift(pekerja1.getJmlShift());
+        pekerja.setTglshift(pekerja1.getTglshift());
+        pekerja.makeAppendforBirth(tglLahir, blnLahir, thnLahir);
+        pekerja.Hitung(pekerja1.getShift());
     }
 }
