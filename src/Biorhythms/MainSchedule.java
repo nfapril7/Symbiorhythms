@@ -28,7 +28,7 @@ public class MainSchedule {
         Pekerja pekerja2 = new Pekerja();
         pekerja2.setJmlShift(pekerja.getJmlShift());
         pekerja2.setTglshift(pekerja.getTglshift());
-        pekerja2.makeAppendforBirth(4, 6, 1995);
+        pekerja2.makeAppendforBirth(4, 4, 1995);
         pekerja2.Hitung(pekerja.getShift());
         pekerja2.getFisik();
         pekerja2.getEmosional();

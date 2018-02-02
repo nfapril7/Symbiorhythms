@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  * @author april nf
  */
 public class CompareBiorhythms {
-    
+
     /**
      *
      * @param BiorithmsPekerja1 : Total nilai Biorythms dari pekerja 1
@@ -33,11 +33,32 @@ public class CompareBiorhythms {
         for (int i = 0; i < jumlahshift; i++) {
             if (BiorithmsPekerja1[i] > BiorithmsPekerja2[i]) {
                 pilih[i] = "Pekerja 1";
-            } else {
+            } else if (BiorithmsPekerja1[1]==BiorithmsPekerja2[i]) {
+                if (jumlahshift % 2 == 0) {
+                    for (int j = 0, k = (jumlahshift/2); j < (jumlahshift/2); j++, k++) {
+                        pilih[j] = "Pekerja 1";
+                        pilih[k] = "Pekerja 2";
+                    }
+                }else{
+                    for (int j = 0, k = ((jumlahshift-1)/2); j < ((jumlahshift-1)/2); j++, k++) {
+                        pilih[j] = "Pekerja 1";
+                        pilih[k] = "Pekerja 2";
+                        System.out.println(j +" "+k);
+                    }
+                    int random = (int) (2 * Math.random()+1);
+                    System.out.println(random);
+                    if (random==1) {
+                        pilih[jumlahshift-1]="Pekerja 1";
+                    }else {
+                        pilih[jumlahshift-1]="Pekerja 2";
+                    }
+                }
+            } else if(BiorithmsPekerja1[i] < BiorithmsPekerja2[i]) {
+                System.out.println("cek");
                 pilih[i] = "Pekerja 2";
             }
             list.add(new Object[]{pekerja.Shift[i], pilih[i]});
-            System.out.println(pekerja.Shift[i]+" - "+pilih[i]);
+            System.out.println(pekerja.Shift[i] + " - " + pilih[i] + " "+i);
         }
 
         DefaultTableModel model = new DefaultTableModel();
@@ -65,14 +86,14 @@ public class CompareBiorhythms {
      * @param v memerlukan inputan parameter berupa objek dari class ValiDate
      * untuk memanggil nilai variabel shift[]
      */
-    public void table(Pekerja bio1 , Pekerja bio2) {
-    //, javax.swing.JTable jTable1, javax.swing.JTable jTable2,
+    public void table(Pekerja bio1, Pekerja bio2) {
+        //, javax.swing.JTable jTable1, javax.swing.JTable jTable2,
         List<Object> list = new ArrayList<>();
         List<Object> list2 = new ArrayList<>();
         for (int i = 0; i < bio1.getJmlShift(); i++) {
 //            list.add(new Object[]{bio1.Shift[i], bio1.fisik[i], bio1.emosional[i], bio1.intelektual[i], bio1.total[i]});
 //            list2.add(new Object[]{bio2.Shift[i], bio2.fisik[i], bio2.emosional[i], bio2.intelektual[i], bio2.total[i]});
-            System.out.println(bio1.emosional[i]+" - "+bio2.emosional[i]);
+            System.out.println(bio1.emosional[i] + " - " + bio2.emosional[i]);
         }
         DefaultTableModel model = new DefaultTableModel();
         DefaultTableModel model2 = new DefaultTableModel();
