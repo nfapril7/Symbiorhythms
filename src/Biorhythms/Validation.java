@@ -19,12 +19,12 @@ import javax.swing.JOptionPane;
  * @author april nf, ryanpradnya
  */
 public class Validation {
-
-   
+    
     boolean isValidate = true;
     Scanner in;
     SimpleDateFormat df;
     private int jumlahHariBulan;
+    ValidasiGUI validasiGUI;
 
     /**
      * Konstruktor class ValiDate
@@ -32,8 +32,8 @@ public class Validation {
     public Validation() {
         in = new Scanner(System.in);
         df = new SimpleDateFormat("dd/mm/yyyy");
+        validasiGUI = new ValidasiGUI();
     }
-
 
     /**
      *
@@ -52,7 +52,7 @@ public class Validation {
     public int getJumlahHariBulan() {
         return jumlahHariBulan;
     }
-    
+
     /**
      * Method makeBirthDate untuk merequest inputan user pada varibel: tgl ,
      * bln, tahun lahir pekerja
@@ -96,8 +96,8 @@ public class Validation {
      */
     boolean check(int tgl, int bln, int thn) {
         try {
-            assert (tgl <= getJumlahHariBulan()|| tgl > 0);
-            if (tgl > getJumlahHariBulan()|| tgl < 0) {
+            assert (tgl <= getJumlahHariBulan() || tgl > 0);
+            if (tgl > getJumlahHariBulan() || tgl < 0) {
                 isValidate = false;
 //                useJOption("Input data tanggal salah");
                 throw new CustomException("Input data tanggal salah");
@@ -116,21 +116,21 @@ public class Validation {
      */
     boolean checkLebih(Date lahir, Date shift) {
         try {
-            if (lahir.after(shift) ||lahir.equals(shift)) {
+            if (lahir.after(shift) || lahir.equals(shift)) {
                 isValidate = false;
 //                useJOption("Tanggal lahir tidak diperbolehkan melebihi tanggal shift");
                 throw new CustomException("Tanggal lahir tidak diperbolehkan melebihi tanggal shift");
             }
             isValidate = true;
-
+            
         } catch (CustomException ex) {
             System.out.println(ex.getMessage());
         }
         return isValidate;
     }
-
-    boolean validasiShift(int jmlShift){
-             try {
+    
+    boolean validasiShift(int jmlShift) {
+        try {
             if (jmlShift < 5 || jmlShift > 10) {
                 isValidate = false;
 //                useJOption("Jumlah shift antara 5 sampai 10 hari");
@@ -141,7 +141,7 @@ public class Validation {
         } catch (CustomException ex) {
             System.out.println(ex.getMessage());
         }
-        return isValidate;   
+        return isValidate;        
     }
-
+    
 }

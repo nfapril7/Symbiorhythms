@@ -14,9 +14,7 @@ import javax.swing.table.DefaultTableModel;
 public class FormSchedule extends javax.swing.JFrame {
 
     ValidasiGUI validasiGUI = new ValidasiGUI();
-    Validation valiDate;
-    ValiDate valiDate2;
-    Pekerja pekerja, pekerja2;
+    Validation v = new Validation();
 
     /**
      * Membuat form baru class FormSchedule
@@ -485,6 +483,25 @@ public class FormSchedule extends javax.swing.JFrame {
         jButton1.setEnabled(true);
         jButton2.setEnabled(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+    void callFunction(int jmlShift, int tglShift, int blnShift, int thnShift, int tglLahir,
+            int blnLahir, int thnLahir, Pekerja pekerja) {
+        Validation v = new Validation();
+        pekerja.MakeJmlShift(jmlShift);
+        pekerja.makeAppendShift(tglShift, blnShift, thnShift);
+        if (pekerja.getValidation().isValidate) {
+            pekerja.makeCalShift();
+            pekerja.makeAppendforBirth(tglLahir, blnLahir, thnLahir);
+            if (pekerja.getValidation().isValidate) {
+                pekerja.Hitung(pekerja.getShift());
+            } else {
+                validasiGUI.useJOption("Input tanggal salah");
+                setNull();
+            }
+        } else {
+            validasiGUI.useJOption("Input tanggal salah");
+            setNull();
+        }
+    }
 
     /**
      * Menjalankan fungsi dari kelas-kelas di package Biorhythms
@@ -493,55 +510,71 @@ public class FormSchedule extends javax.swing.JFrame {
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try {
-            valiDate = new Validation();
-            Biorhythms biorhythms = new Biorhythms(pekerja.getJmlShift());
-            pekerja = new Pekerja(biorhythms);
-            valiDate.MakeShift(Integer.parseInt(TFtglShift.getText()), Integer.parseInt(TFblnShift.getText()),
-                    Integer.parseInt(TFthnShift.getText()), Integer.parseInt(TFjmlHari.getText()), pekerja);
-            valiDate.validate(Integer.parseInt(TFtglShift.getText()), Integer.parseInt(TFblnShift.getText()), Integer.parseInt(TFthnShift.getText()), pekerja);
-            if (valiDate.isValidate) {
-                valiDate.validate(Integer.parseInt(TFtgl1.getText()), Integer.parseInt(TFbln1.getText()), Integer.parseInt(TFthn1.getText()), pekerja);
-                if (valiDate.isValidate) {
-                    valiDate2 = new Validation();
-                    pekerja2 = new Pekerja(biorhythms);
-                    pekerja2.setJmlShift(pekerja.getJmlShift());
-                    pekerja2.setTglshift(pekerja.getTglshift());
-                    valiDate2.validate(Integer.parseInt(TFtgl2.getText()), Integer.parseInt(TFbln2.getText()), Integer.parseInt(TFthn2.getText()), pekerja2);
-                    if (valiDate2.isValidate) {
-                        valiDate.makeCal(pekerja);
-                        valiDate2.makeCal(pekerja2);
-                        if (valiDate.isValidate && valiDate2.isValidate) {
-                            valiDate.Hitung(pekerja.getShift(), biorhythms, pekerja);
-//                            Pekerja p2 = new Pekerja(valiDate2.getJmlShift());
-                            valiDate2.Hitung(pekerja2.getShift(), biorhythms, pekerja2);
-                            CompareBiorhythms compareBiorhythms = new CompareBiorhythms();
-                            compareBiorhythms.perbandingan(pekerja.getTotal(), pekerja2.getTotal(), pekerja.getJmlShift(), pekerja, jTable1);
-                            compareBiorhythms.table(biorhythms, biorhythms, jTbDetail1, jTbDetail2, pekerja.getJmlShift(), pekerja);
-                            jTFlahir1.setText(String.valueOf(pekerja.getTgllahir()));
-                            jTFlahir2.setText(String.valueOf(pekerja2.getTgllahir()));
-                            jButton2.setEnabled(true);
-                            jButton1.setEnabled(false);
-                        } else {
-                            validasiGUI.useJOption("Validasi gagal");
-                            setNull();
-                        }
-                    } else {
-                        validasiGUI.useJOption("Validasi gagal");
-                        setNull();
-                    }
-                } else {
-                    validasiGUI.useJOption("Validasi gagal");
-                    setNull();
-                }
-            } else {
-                validasiGUI.useJOption("Validasi gagal");
-                setNull();
-            }
-        } catch (NumberFormatException ex) {
-            validasiGUI.useJOption("Data tidak boleh kosong");
+//        try {
+        Pekerja pekerja = new Pekerja();
+        callFunction(Integer.parseInt(TFjmlHari.getText()), Integer.parseInt(TFtglShift.getText()), Integer.parseInt(TFblnShift.getText()),
+                Integer.parseInt(TFthnShift.getText()), Integer.parseInt(TFtgl1.getText()), Integer.parseInt(TFbln1.getText()), Integer.parseInt(TFthn1.getText()), pekerja);
+        Pekerja pekerja2 = new Pekerja();
+        callFunction(Integer.parseInt(TFjmlHari.getText()), Integer.parseInt(TFtglShift.getText()), Integer.parseInt(TFblnShift.getText()),
+                Integer.parseInt(TFthnShift.getText()), Integer.parseInt(TFtgl2.getText()), Integer.parseInt(TFbln2.getText()), Integer.parseInt(TFthn2.getText()), pekerja2);
+        if (pekerja.getValidation().isValidate && pekerja2.getValidation().isValidate) {
+            CompareBiorhythms compareBio = new CompareBiorhythms();
+            compareBio.perbandingan(pekerja.getBiorhythms().total, pekerja2.getBiorhythms().total, pekerja.getJmlShift(), pekerja, jTable1);
+            compareBio.table(pekerja, pekerja2, jTbDetail1, jTbDetail2);
+        } else {
+            validasiGUI.useJOption("Validasi gagal");
+            setNull();
         }
-
+//        jButton1.setEnabled(false);
+//        if(v.isValidate){
+//            jButton1.setEnabled(true);
+//        }
+//            Biorhythms biorhythms = new Biorhythms(pekerja.getJmlShift());
+//            pekerja = new Pekerja(biorhythms);
+//            valiDate.MakeShift(Integer.parseInt(TFtglShift.getText()), Integer.parseInt(TFblnShift.getText()),
+//                    Integer.parseInt(TFthnShift.getText()), Integer.parseInt(TFjmlHari.getText()), pekerja);
+//            valiDate.validate(Integer.parseInt(TFtglShift.getText()), Integer.parseInt(TFblnShift.getText()), Integer.parseInt(TFthnShift.getText()), pekerja);
+//            if (valiDate.isValidate) {
+//                valiDate.validate(Integer.parseInt(TFtgl1.getText()), Integer.parseInt(TFbln1.getText()), Integer.parseInt(TFthn1.getText()), pekerja);
+//                if (valiDate.isValidate) {
+//                    valiDate2 = new Validation();
+//                    pekerja2 = new Pekerja(biorhythms);
+//                    pekerja2.setJmlShift(pekerja.getJmlShift());
+//                    pekerja2.setTglshift(pekerja.getTglshift());
+//                    valiDate2.validate(Integer.parseInt(TFtgl2.getText()), Integer.parseInt(TFbln2.getText()), Integer.parseInt(TFthn2.getText()), pekerja2);
+//                    if (valiDate2.isValidate) {
+//                        valiDate.makeCal(pekerja);
+//                        valiDate2.makeCal(pekerja2);
+//                        if (valiDate.isValidate && valiDate2.isValidate) {
+//                            valiDate.Hitung(pekerja.getShift(), biorhythms, pekerja);
+////                            Pekerja p2 = new Pekerja(valiDate2.getJmlShift());
+//                            valiDate2.Hitung(pekerja2.getShift(), biorhythms, pekerja2);
+//                            CompareBiorhythms compareBiorhythms = new CompareBiorhythms();
+//                            compareBiorhythms.perbandingan(pekerja.getTotal(), pekerja2.getTotal(), pekerja.getJmlShift(), pekerja, jTable1);
+//                            compareBiorhythms.table(biorhythms, biorhythms, jTbDetail1, jTbDetail2, pekerja.getJmlShift(), pekerja);
+//                            jTFlahir1.setText(String.valueOf(pekerja.getTgllahir()));
+//                            jTFlahir2.setText(String.valueOf(pekerja2.getTgllahir()));
+//                            jButton2.setEnabled(true);
+//                            jButton1.setEnabled(false);
+//                        } else {
+//                            validasiGUI.useJOption("Validasi gagal");
+//                            setNull();
+//                        }
+//                    } else {
+//                        validasiGUI.useJOption("Validasi gagal");
+//                        setNull();
+//                    }
+//                } else {
+//                    validasiGUI.useJOption("Validasi gagal");
+//                    setNull();
+//                }
+//            } else {
+//                validasiGUI.useJOption("Validasi gagal");
+//                setNull();
+//            }
+//        } catch (NumberFormatException ex) {
+//            validasiGUI.useJOption("Data tidak boleh kosong");
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void TFjmlHariKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TFjmlHariKeyTyped

@@ -30,11 +30,13 @@ public class Pekerja {
     protected Date Shift[];
     Validation validation;
     SimpleDateFormat dateFormat;
+    ValidasiGUI validasiGUI;
 
     public Pekerja() {
         biorhythms = new Biorhythms();
         validation = new Validation();
         dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+        validasiGUI = new ValidasiGUI();
     }
 
     public Pekerja(int jmlShift, Date Tgllahir, Date Tglshift, Date[] Shift, Validation validation, SimpleDateFormat dateFormat) {
@@ -46,7 +48,10 @@ public class Pekerja {
         this.validation = validation;
         this.dateFormat = dateFormat;
     }
-    
+
+    public Validation getValidation() {
+        return validation;
+    }
 
     public Biorhythms getBiorhythms() {
         return biorhythms;
@@ -122,6 +127,7 @@ public class Pekerja {
     public Date getTglshift() {
         return Tglshift;
     }
+
     /**
      * Method HandlingBatasan berfungsi untuk menhandling jika inputan user pada
      * jumlah shift melebihi/kurang dari persyaratan (jumlah hari shift harus 5
@@ -156,7 +162,7 @@ public class Pekerja {
             String tempShift = builder.toString();
             try {
                 setTglshift(dateFormat.parse(tempShift));
-                System.out.println("Tgl shift "+getTglshift());
+                System.out.println("Tgl shift " + getTglshift());
             } catch (ParseException ex) {
                 System.out.println(ex.getMessage());
             }
@@ -225,8 +231,7 @@ public class Pekerja {
                 biorhythms.getEmosional(hari, getJmlShift());
                 biorhythms.getIntelektual(hari, getJmlShift());
                 biorhythms.getTotal(getJmlShift());
-            }            
+            }
         }
     }
-
 }

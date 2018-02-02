@@ -26,7 +26,7 @@ public class CompareBiorhythms {
      * @return : Mengembalikan nilai diantara pekerja 1 atau 2 yang akan
      * terpilih pada masing-masing jadwal shift
      */
-    public String[] perbandingan(double BiorithmsPekerja1[], double BiorithmsPekerja2[], int jumlahshift, Pekerja pekerja) {
+    public String[] perbandingan(double BiorithmsPekerja1[], double BiorithmsPekerja2[], int jumlahshift, Pekerja pekerja, javax.swing.JTable jTable1) {
         String pilih[] = new String[jumlahshift];
 //        jTable1 = new JTable(model);         
         List<Object> list = new ArrayList<>();
@@ -49,16 +49,15 @@ public class CompareBiorhythms {
                 pilih[i] = "Pekerja 2";
             }
             list.add(new Object[]{pekerja.Shift[i], pilih[i]});
-            System.out.println(pilih[i]+" - "+i);
+//            System.out.println(pilih[i]+" - "+i);
         }
 
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(new Object[]{"Tanggal", "Nama"});
         for (Object obj : list) {
             model.addRow((Object[]) obj);
-        }
-//        , Pekerja p, javax.swing.JTable jTable1
-//        jTable1.setModel(model);
+        }        
+        jTable1.setModel(model);
         return pilih;
     }
 
@@ -85,13 +84,13 @@ public class CompareBiorhythms {
      * @param v memerlukan inputan parameter berupa objek dari class ValiDate
      * untuk memanggil nilai variabel shift[]
      */
-    public void table(Pekerja bio1, Pekerja bio2) {
-        //, javax.swing.JTable jTable1, javax.swing.JTable jTable2,
+    public void table(Pekerja bio1, Pekerja bio2 , javax.swing.JTable jTable1, javax.swing.JTable jTable2) {
+       
         List<Object> list = new ArrayList<>();
         List<Object> list2 = new ArrayList<>();
         for (int i = 0; i < bio1.getJmlShift(); i++) {
-//            list.add(new Object[]{bio1.Shift[i], bio1.fisik[i], bio1.emosional[i], bio1.intelektual[i], bio1.total[i]});
-//            list2.add(new Object[]{bio2.Shift[i], bio2.fisik[i], bio2.emosional[i], bio2.intelektual[i], bio2.total[i]});
+            list.add(new Object[]{bio1.Shift[i], bio1.getBiorhythms().fisik[i], bio1.getBiorhythms().emosional[i], bio1.getBiorhythms().intelektual[i], bio1.getBiorhythms().total[i]});
+            list2.add(new Object[]{bio2.Shift[i], bio2.getBiorhythms().fisik[i], bio2.getBiorhythms().emosional[i], bio2.getBiorhythms().intelektual[i], bio2.getBiorhythms().total[i]});
             System.out.println(bio1.getBiorhythms().total[i] + " - " + bio2.getBiorhythms().total[i]);
         }
         DefaultTableModel model = new DefaultTableModel();
@@ -101,11 +100,11 @@ public class CompareBiorhythms {
         for (Object obj : list) {
             model.addRow((Object[]) obj);
         }
-//        jTable1.setModel(model);
+        jTable1.setModel(model);
 
         for (Object obj : list2) {
             model2.addRow((Object[]) obj);
         }
-//        jTable2.setModel(model2);
+        jTable2.setModel(model2);
     }
 }

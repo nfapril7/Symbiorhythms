@@ -21,8 +21,8 @@ public class MainSchedule {
         callFuction(pekerja2, pekerja, 4, 4, 1995);
 
         CompareBiorhythms compareBio = new CompareBiorhythms();
-        compareBio.perbandingan(pekerja.getBiorhythms().total, pekerja2.getBiorhythms().total, pekerja.getJmlShift(), pekerja);
-        compareBio.table(pekerja, pekerja2);
+//        compareBio.perbandingan(pekerja.getBiorhythms().total, pekerja2.getBiorhythms().total, pekerja.getJmlShift(), pekerja);
+//        compareBio.table(pekerja, pekerja2);
     }
 
     static void callFunction(Pekerja pekerja, int jmlShift, int tglShift, int blnShift, int thnShift, int tglLahir,
